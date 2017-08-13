@@ -1,1 +1,5 @@
-leetcode 题解
+# leetcode
+
+Some leetcode solutions with JavaScript.
+
+:)
