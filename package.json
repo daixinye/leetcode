@@ -1,0 +1,19 @@
+{
+  "name": "leetcode",
+  "version": "1.0.0",
+  "description": "Some leetcode solutions with JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "fetch": "node fetch/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daixinye/leetcode.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daixinye/leetcode/issues"
+  },
+  "homepage": "https://github.com/daixinye/leetcode#readme"
+}
