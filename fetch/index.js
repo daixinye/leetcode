@@ -57,13 +57,13 @@ void function test(f){
         [1],
     ]
 
-    const render = function(val){
-        console.log(val)
-        console.log()
-    }
-
     mock.forEach(function(item, index, array) {
-        render(f.apply(null,item))
+        var start = new Date()
+        console.log('#',index+1)
+        console.log('input: ', item)
+        console.log('output: ', f.apply(null,item))
+        console.log('time: %s',new Date() - start)
+        console.log()
     })
 }()
     `
