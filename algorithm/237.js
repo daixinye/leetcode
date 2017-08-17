@@ -10,22 +10,21 @@
  * @return {void} Do not return anything, modify node in-place instead.
  */
 var deleteNode = function(node) {
-	//这题用递归做的话要注意，递归参数传递的是引用的拷贝。 beats 20.22，44.22，70.04，79.06，88.45%
-	function copy(node){
-		if(!!node.next){
-			node.val = node.next.val;
-			if(!node.next.next){
-				node.next = null;
-				return;
-			}
-			copy(node.next);
-		}else{
-			return;
-		}
+	//注意node传递进来的只是node指针的拷贝，分三种情况去考虑，最好一次运行 beats 88.45%
+	//第一种 node是最后一个节点
+	if(!node.next){
+		return;
 	}
 	
-	copy(node);
-	
+	if(!node.next.next){
+		//第二种情况 node后有一个节点，直接复制val然后把next置为null
+		node.val = node.next.val;
+		node.next = null;
+	}else{
+		//第三种情况 node后有2个以上的节点，直接复制val然后把next指向第2个节点
+		node.val = node.next.val;
+		node.next = node.next.next;
+	}
 };
 
 function ListNode(val){

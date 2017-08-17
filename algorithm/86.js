@@ -11,49 +11,36 @@
  * @return {ListNode}
  */
 var partition = function(head, x) {
-	//解一：这个解法没有用到新的节点空间，但是会修改原链表，beats 21%
-    var leftHead,
-		rightHead,
-		leftIterator,
-		rightIterator,
-		iterator;
+	//解三：通过递归遍历，直接修改原链表，beats 78.57%
+	var beforeLeftHead = new ListNode(0),
+		beforeRightHead = new ListNode(0);
+	var leftIterator = beforeLeftHead,
+		rightIterator = beforeRightHead;
 	
-	iterator = head;
-	leftHead = null;
-	rightHead = null;
-	
-	while(iterator!==null){
-		var val = iterator.val;
-		var next = iterator.next;
-		if(val<x){
-			if(!leftHead){
-				leftHead = iterator;
-				leftIterator = leftHead;
-			}else{
-				leftIterator.next = iterator;
-				leftIterator = leftIterator.next;
-			}
-		}else{
-			if(!rightHead){
-				rightHead = iterator;
-				rightIterator = rightHead;
-			}else{
-				rightIterator.next = iterator;
-				rightIterator = rightIterator.next;
-			}
+	function pushNode(node,x){
+		if(!node){
+			return null;
 		}
-		iterator = iterator.next;
+		
+		if(node.val<x){
+			//addToLeft
+			leftIterator.next = node;
+			leftIterator = leftIterator.next;
+		}else{
+			//addToRight
+			rightIterator.next = node;
+			rightIterator = rightIterator.next;
+		}
+		pushNode(node.next,x);
 	}
 	
-	//防止出现循环链表
-	rightIterator?rightIterator.next = null:null;
+	pushNode(head, x);
 	
-	if(leftHead===null){
-		return rightHead;
-	}else{
-		leftIterator.next = rightHead;
-		return leftHead;
-	}
+	leftIterator.next = null;
+	rightIterator.next = null;
+	//merge
+	leftIterator.next = beforeRightHead.next;
+    return beforeLeftHead.next;
 };
 
 function ListNode(val){
@@ -81,7 +68,6 @@ function makeListNode(arr){
 	return head;
 }
 
-
 //单元测试
 function test(arr=[],x=0){
 	console.log(partition(makeListNode(arr), x));
@@ -90,5 +76,4 @@ test([1,4,3,2,5,2],3);
 test([],0);
 test([2,3,4],1);
 test([2,3,4],5);
-
 

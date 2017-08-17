@@ -17,25 +17,16 @@ var {
 } = require('./lib/LinkedList.js');
 
 var removeElements = function(head, val) {
+	//beats 63.08
 	var beforeHead = new ListNode(0);
 	beforeHead.next = head;
 
 	(function(node){
-		if(!node.next){
-			return;
+		if(!node){
+			return null;
 		}
-
-		var self = arguments.callee;
-
-		var son = node.next;
-		var grandson = son?son.next:null;
-
-		if(son.val == val){
-			node.next = grandson;
-			self(node);
-		}
-		self(son);
-
+		node.next = arguments.callee(node.next);
+ 		return node.val==val?node.next:node;
 	}(beforeHead))
 
 	return beforeHead.next;
