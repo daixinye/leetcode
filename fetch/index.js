@@ -22,7 +22,14 @@ https.get(url, res => {
 
 function getProblem(list, id){
     let problems = list.stat_status_pairs
-    let problem = problems[problems.length - id]
+    let problem 
+    problems.some( p => {
+        if(p.stat.question_id == id){
+            problem = p
+            return true
+        }
+    })
+
     let url = `https://leetcode.com/problems/${problem.stat.question__title_slug}/description/`
     console.log('problem %s url: %s',id, url)
 
