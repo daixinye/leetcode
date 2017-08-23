@@ -1,5 +1,6 @@
 const https = require('https')
 const fs = require('fs')
+const chalk = require('chalk')
 const PATH = './'
 const EXPIRES = 24 * 60 * 60 * 1000
 
@@ -8,7 +9,7 @@ void function main() {
     if (Number.isNaN(problem_id))
         return console.error('> invalid parameter: %s', process.argv[2])
     
-    console.log('> fetching problem list ...')
+    console.log(chalk.blue('> fetching problem list ...'))
     // 检查缓存
     let cache
     try {
@@ -18,12 +19,12 @@ void function main() {
         cache = JSON.parse(cache)
     }catch(e){
         cache = null
-        console.log('> cache not found or expired ...')
-        console.log('> downloading problem list ...')
+        console.log(chalk.yellow('> cache not found or expired ...'))
+        console.log(chalk.blue('> downloading problem list ...'))
     }
 
     if (cache && Date.now() - cache.expires < 0) {
-        console.log('> cache found ...')
+        console.log(chalk.green('> cache found ...'))
         getProblem(cache.list, problem_id)
     } else {
         const url = 'https://leetcode.com/api/problems/all/'
@@ -55,7 +56,7 @@ function getProblem(list, id) {
     })
 
     let url = `https://leetcode.com/problems/${problem.stat.question__title_slug}/description/`
-    console.log('> fetching problem %s , url: %s', id, url)
+    console.log(chalk.blue(`> fetching problem ${id} , url: ${url}`))
 
     https.get(url, res => {
         let html = ''
@@ -69,10 +70,10 @@ function getProblem(list, id) {
             codeDefinition = codeDefinition.replace(/\\u000A/g, '\u000A')
             codeDefinition = codeDefinition.replace(/\\u003D/g, '\u003D')
             codeDefinition = codeDefinition.replace(/\\u003B/g, '\u003B')
-            console.log('> saving: %s', `${PATH}${problem.stat.question__title_slug}.js`)
+            console.log(chalk.blue('> saving: %s', `${PATH}${problem.stat.question__title_slug}.js`))
             fs.writeFile(`${PATH}${id}.${problem.stat.question__title_slug}.js`, render(codeDefinition), function (err) {
                 if (err) console.log(err)
-                console.log('> done')
+                console.log(chalk.green('> done'))
             })
         })
     })

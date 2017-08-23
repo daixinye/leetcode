@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/daixinye/leetcode/issues"
   },
-  "homepage": "https://github.com/daixinye/leetcode#readme"
+  "homepage": "https://github.com/daixinye/leetcode#readme",
+  "devDependencies": {
+    "chalk": "^2.1.0"
+  }
 }
