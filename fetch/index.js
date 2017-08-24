@@ -2,7 +2,7 @@ const https = require('https')
 const fs = require('fs')
 const chalk = require('chalk')
 const PATH = './'
-const EXPIRES = 24 * 60 * 60 * 1000
+const EXPIRES = 24 * 60 * 60 * 1000 * 7
 
 void function main() {
     const problem_id = Number(process.argv[2])
@@ -19,14 +19,15 @@ void function main() {
         cache = JSON.parse(cache)
     }catch(e){
         cache = null
-        console.log(chalk.yellow('> cache not found or expired ...'))
-        console.log(chalk.blue('> downloading problem list ...'))
     }
 
     if (cache && Date.now() - cache.expires < 0) {
         console.log(chalk.green('> cache found ...'))
         getProblem(cache.list, problem_id)
     } else {
+        console.log(chalk.yellow('> cache not found or expired ...'))
+        console.log(chalk.blue('> downloading problem list ...'))
+
         const url = 'https://leetcode.com/api/problems/all/'
         https.get(url, res => {
             res.setEncoding('utf8')
@@ -39,7 +40,7 @@ void function main() {
                 fs.writeFile('./cache/list.json', JSON.stringify({
                     expires: Date.now() + EXPIRES,
                     list: list
-                }), err => console.log(err))
+                }), err => err && console.log(err))
             })
         }).on('error', e => console.log(e))
     }
@@ -70,7 +71,7 @@ function getProblem(list, id) {
             codeDefinition = codeDefinition.replace(/\\u000A/g, '\u000A')
             codeDefinition = codeDefinition.replace(/\\u003D/g, '\u003D')
             codeDefinition = codeDefinition.replace(/\\u003B/g, '\u003B')
-            console.log(chalk.blue('> saving: %s', `${PATH}${problem.stat.question__title_slug}.js`))
+            console.log(chalk.blue(`> saving: ${PATH}${problem.stat.question__title_slug}.js`))
             fs.writeFile(`${PATH}${id}.${problem.stat.question__title_slug}.js`, render(codeDefinition), function (err) {
                 if (err) console.log(err)
                 console.log(chalk.green('> done'))
