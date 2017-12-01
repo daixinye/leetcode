@@ -3,8 +3,10 @@
  * @param {number} y
  * @return {number}
  */
+
+// 一解
 var hammingDistance = function(x, y) {
-  var z = (x | y) - (x & y)
+  var z = (x | y) - (x & y) // 改进： 直接使用 异或 ^ 就行了...
   var c = 0
   while (z !== 0) {
     if (z % 2 === 0) {
@@ -15,6 +17,13 @@ var hammingDistance = function(x, y) {
     }
   }
   return c
+}
+
+// 改进
+hammingDistance = function(x, y) {
+  var z = x ^ y
+  z = z.toString(2).match(/1/g)
+  return z ? z.length : 0
 }
 
 void (function test(f) {
