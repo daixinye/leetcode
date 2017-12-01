@@ -4,11 +4,11 @@ Some leetcode solutions with JavaScript.
 
 :)
 
-[x] add a tool which can fetch the specific problem from leetcode
+-[x] add a tool which can fetch the specific problem from leetcode
 
 ## Usage
 
-Just run 
+Just run
 
 ```
 npm run fetch -- [PROBLEM_ID]
