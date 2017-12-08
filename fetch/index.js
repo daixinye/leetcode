@@ -108,7 +108,7 @@ void function test(f){
         console.log('#',index+1)
         console.log('input: ', item)
         console.log('output: ', f.apply(null,item))
-        console.log('time: %s \r\n',new Date() - start)
+        console.log('time: %s',new Date() - start)
     })
 }(${getFunctionName(codeDefinition)})
     `
