@@ -1,13 +1,14 @@
 const https = require('https')
 const fs = require('fs')
 const chalk = require('chalk')
+
 const PATH = './'
+// 设置缓存的过期时间是7天
 const EXPIRES = 24 * 60 * 60 * 1000 * 7
 
-void (function main() {
+void (function main () {
   const problem_id = Number(process.argv[2])
-  if (Number.isNaN(problem_id))
-    return console.error('> invalid parameter: %s', process.argv[2])
+  if (Number.isNaN(problem_id)) { return console.error('> invalid parameter: %s', process.argv[2]) }
 
   console.log(chalk.blue('> fetching problem list ...'))
   // 检查缓存
@@ -52,7 +53,7 @@ void (function main() {
   }
 })()
 
-function getProblem(list, id) {
+function getProblem (list, id) {
   let problems = list.stat_status_pairs
   let problem
   problems.some(p => {
@@ -85,7 +86,7 @@ function getProblem(list, id) {
       fs.writeFile(
         `${PATH}${id}.${problem.stat.question__title_slug}.js`,
         render(codeDefinition),
-        function(err) {
+        function (err) {
           if (err) console.log(err)
           console.log(chalk.green('> done'))
         }
@@ -94,7 +95,7 @@ function getProblem(list, id) {
   })
 }
 
-function render(codeDefinition) {
+function render (codeDefinition) {
   return `
 ${codeDefinition}
 
@@ -115,7 +116,7 @@ void function test(f){
 }
 
 // 获取函数名称
-function getFunctionName(codeDefinition) {
+function getFunctionName (codeDefinition) {
   var pattern = /.*(?= = function\()/
   var result = codeDefinition.match(pattern)
   if (!result) {
