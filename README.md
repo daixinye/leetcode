@@ -15,5 +15,3 @@ npm run fetch -- <PROBLEM_ID>
 ```
 
 then you can start thinking & coding ...
-
-## 目录结构
