@@ -4,7 +4,9 @@
   "description": "Some leetcode solutions with JavaScript.",
   "main": "index.js",
   "scripts": {
-    "fetch": "node ./main.js"
+    "fetch": "node ./main.js",
+    "cpp": "./scripts/cpp.sh",
+    "js": "./scripts/js.sh"
   },
   "repository": {
     "type": "git",
